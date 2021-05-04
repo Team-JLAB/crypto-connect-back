@@ -11,7 +11,7 @@ TRANSACTION_TYPES = (
 
 class Wallet(models.Model):
     wallet_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user_id = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     balance = MoneyField(max_digits=14, decimal_places=2,
