@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .serializer import WalletSerializer
+from .models import Wallet
 
-# Create your views here.
+
+
+class WalletGetUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+
+
