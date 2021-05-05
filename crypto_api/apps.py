@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CryptoConfig(AppConfig):
+class CryptoApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'crypto'
+    name = 'crypto_api'
