@@ -3,15 +3,15 @@ from .models import User, Wallet
 from djmoney.money import Money
 
 class WalletSerializer(serializers.ModelSerializer):
+    def validate_balance(self, balance):
+        if balance < 0:
+            raise serializers.ValidationError('Wallet balance cannot be less than $0')
+        return balance
+    
     class Meta:
         fields = ('balance', )
         model = Wallet
 
-    def update(self, instance, validated_data):
-        wallet = super(WalletSerializer,self).update(instance, validated_data)
-        if wallet.balance < Money(0, 'USD'):
-            raise serializers.ValidationError('Wallet balance cannot be less than $0')
-        return wallet
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
