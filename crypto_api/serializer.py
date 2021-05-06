@@ -1,17 +1,22 @@
 from rest_framework import serializers
 from .models import User, Wallet
-
+from djmoney.money import Money
 
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('balance', )
         model = Wallet
 
+    def update(self, instance, validated_data):
+        wallet = super(WalletSerializer,self).update(instance, validated_data)
+        if wallet.balance < Money(0, 'USD'):
+            raise serializers.ValidationError('Wallet balance cannot be less than $0')
+        return wallet
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('email', 'password', 'id')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
