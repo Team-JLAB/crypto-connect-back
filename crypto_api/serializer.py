@@ -3,6 +3,12 @@ from .models import User, Wallet
 
 
 class WalletSerializer(serializers.ModelSerializer):
+    def validate_balance(self, balance):
+        if balance < 0:
+            raise serializers.ValidationError(
+                'Wallet balance cannot be less than $0')
+        return balance
+
     class Meta:
         fields = ('balance', )
         model = Wallet
@@ -11,7 +17,7 @@ class WalletSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('email', 'password', 'id')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
