@@ -9,4 +9,5 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
     path('wallet/<int:pk>', WalletGetUpdate.as_view(), name='wallet'),
     url(r'^', include(router.urls)),
+    url(r'^auth/', include('rest_auth.urls')),
 ]
