@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'crypto_api',
     'djmoney',
     'rest_framework.authtoken',
-    'rest_auth', 
+    'rest_auth',
+    'corsheaders', 
 ]
 
 REST_FRAMEWORK = {
