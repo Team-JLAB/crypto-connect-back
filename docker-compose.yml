@@ -7,13 +7,15 @@ services:
       - .:/code
     ports:
       - "8000:8000"
-  db:
-    image: postgres:11
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - postgres_volume:/var/lib/postgresql/data/
-volumes:
-  postgres_volume:
+
+# LOCAL ONLY
+#   db:
+#     image: postgres:11
+#     environment:
+#       - POSTGRES_DB=postgres
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     volumes:
+#       - postgres_volume:/var/lib/postgresql/data/
+# volumes:
+#   postgres_volume:
