@@ -22,14 +22,6 @@ pycodestyle = ">=2.7.0"
 toml = "*"
 
 [[package]]
-name = "dj-database-url"
-version = "0.5.0"
-description = "Use Database URLs in your Django Application."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "django"
 version = "3.2.1"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
@@ -219,7 +211,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "62876c147bd26980a4a02ab97f3ae1e1d63a0251e40590016b6e54a1a5f6ae0c"
+content-hash = "524f9636e71ea11c23d929ad37d180be4db9b2cbc60cc942355f2b2a6d5d74cb"
 
 [metadata.files]
 asgiref = [
@@ -229,10 +221,6 @@ asgiref = [
 autopep8 = [
     {file = "autopep8-1.5.7-py2.py3-none-any.whl", hash = "sha256:aa213493c30dcdac99537249ee65b24af0b2c29f2e83cd8b3f68760441ed0db9"},
     {file = "autopep8-1.5.7.tar.gz", hash = "sha256:276ced7e9e3cb22e5d7c14748384a5cf5d9002257c0ed50c0e075b68011bb6d0"},
-]
-dj-database-url = [
-    {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
-    {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
     {file = "Django-3.2.1-py3-none-any.whl", hash = "sha256:e2f73790c60188d3f94f08f644de249d956b3789161e7604509d128a13fb2fcc"},
