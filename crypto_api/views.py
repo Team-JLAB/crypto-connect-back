@@ -1,6 +1,6 @@
 from rest_framework import generics, viewsets
-from .serializer import WalletSerializer, UserSerializer
-from .models import Wallet, User
+from .serializer import WalletSerializer, UserSerializer, WatchlistSerializer
+from .models import Wallet, User, Watchlist
 
 
 class WalletGetUpdate(generics.RetrieveUpdateAPIView):
@@ -11,3 +11,12 @@ class WalletGetUpdate(generics.RetrieveUpdateAPIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class WatchlistViewSet(viewsets.ModelViewSet):
+    queryset = Watchlist.objects.all()
+    serializer_class = WatchlistSerializer
+
+
+
+
+

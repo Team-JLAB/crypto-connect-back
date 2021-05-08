@@ -1,11 +1,15 @@
 from rest_framework import serializers
-from .models import User, Wallet
+from .models import User, Wallet, Watchlist
+
 
 
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('balance', )
         model = Wallet
+    
+ 
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,4 +24,13 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         Wallet.objects.create(user_id=user)
+       
         return user
+
+class WatchlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Watchlist
+        fields = ('coin', 'user_id' )
+
+ 
+  
