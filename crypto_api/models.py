@@ -32,6 +32,10 @@ class Transaction(models.Model):
     transaction_type = models.CharField(
         max_length=10, choices=TRANSACTION_TYPES, default="BUY")
 
+    def save(self, *args, **kwargs):
+        self.coin = self.coin.lower()
+        return super(Transaction, self).save(*args, **kwargs)
+
 
 class User(AbstractUser):
     username = models.CharField(blank=True, null=True, max_length=64)

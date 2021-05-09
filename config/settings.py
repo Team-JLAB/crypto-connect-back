@@ -38,18 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # rest framework
     'rest_framework',
-    'crypto_api',
-    'djmoney',
     'rest_framework.authtoken',
-    'rest_auth', 
+    'rest_auth',
+
+    # local apps
+    'crypto_api',
+
+    # 3rd party
+    'djmoney',
 ]
 
-REST_FRAMEWORK = {
-  'DEFAULT_PERMISSION_CLASSES': [
-    'rest_framework.permissions.AllowAny',
-  ]
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
