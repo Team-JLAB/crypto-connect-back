@@ -103,7 +103,11 @@ DATABASES = {
         'PORT': env('DATABASE_PORT')
     }
 }
+
+# Reads DB env from the URL string instead of the individual configs
 db_from_env = dj_database_url.config(conn_max_age=600)
+
+# Comment out to use individual configs in .env
 DATABASES['default'].update(db_from_env)
 
 # Password validation
