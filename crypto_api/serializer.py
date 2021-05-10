@@ -55,17 +55,13 @@ class TransactionSerializer(serializers.ModelSerializer):
                 user_id=txn.user_id, coin=txn.coin)
             coin_txns = [c.units if c.transaction_type ==
                          'BUY' else (c.units * -1) for c in coin_queryset]
-            print(sum(coin_txns))
             available_units = sum(coin_txns)
             if available_units <= 0:
                 raise serializers.ValidationError('Not enough avaliable units')
 
         # UDPDATE WALLET FUNDS (wallet model will raise error if this goes negative)
-        price = txn.price if txn.transaction_type == 'SELL' else (
-            txn.price * - 1)
-        print('original balance ', wallet.balance)
+        price = txn.price if txn.transaction_type == 'SELL' else txn.price * - 1
         wallet.balance += (price * txn.units)
-        print('new balance ', wallet.balance)
 
         # IF PURCHASE, VALIDATE FUNDS
         if txn.transaction_type == "BUY" and wallet.balance < Money(0, 'USD'):
