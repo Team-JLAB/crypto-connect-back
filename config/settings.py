@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 import environ
+import dj_database_url
 from pathlib import Path
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,13 +24,11 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS'))
-
-
 
 # Application definition
 
@@ -47,6 +45,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
 
+    # cors
+    'corsheaders',
+
     # local apps
     'crypto_api',
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -100,6 +102,13 @@ DATABASES = {
         'PORT': env('DATABASE_PORT')
     }
 }
+
+# Reads DB env from the URL string instead of the individual configs
+db_from_env = dj_database_url.config(conn_max_age=600)
+
+# Comment out to use individual configs in .env
+DATABASES['default'].update(db_from_env)
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -140,6 +149,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -156,4 +167,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-REST_USE_JWT = False
+REST_USE_JWT = True
+
+CORS_ALLOW_ALL_ORIGINS = env.bool("ALLOW_ALL_ORIGINS")

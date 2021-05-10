@@ -34,9 +34,26 @@ class UserSerializer(serializers.ModelSerializer):
       
 
 class WatchlistSerializer(serializers.ModelSerializer):
+    def validate_coin(self, coin):
+        user_id = self.context['request'].data['user_id']
+        try:
+            obj = self.Meta.model.objects.get(user_id=user_id, coin=coin)
+        except self.Meta.model.DoesNotExist:
+            pass
+        else:
+            raise serializers.ValidationError(
+                f'user_id {user_id} with coin {coin} already exists')
+        return coin
+
+    def validate_user_id(self, user_id):
+        if user_id != self.context['request'].user:
+            raise serializers.ValidationError(
+                'Cannot create transactions for unauthenticated user')
+        return user_id
+
     class Meta:
         model = Watchlist
-        fields = ('coin', 'user_id' )
+        fields = ('user_id', 'coin', 'watchlist_id')
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -61,17 +78,13 @@ class TransactionSerializer(serializers.ModelSerializer):
                 user_id=txn.user_id, coin=txn.coin)
             coin_txns = [c.units if c.transaction_type ==
                          'BUY' else (c.units * -1) for c in coin_queryset]
-            print(sum(coin_txns))
             available_units = sum(coin_txns)
             if available_units <= 0:
                 raise serializers.ValidationError('Not enough avaliable units')
 
         # UDPDATE WALLET FUNDS (wallet model will raise error if this goes negative)
-        price = txn.price if txn.transaction_type == 'SELL' else (
-            txn.price * - 1)
-        print('original balance ', wallet.balance)
+        price = txn.price if txn.transaction_type == 'SELL' else txn.price * - 1
         wallet.balance += (price * txn.units)
-        print('new balance ', wallet.balance)
 
         # IF PURCHASE, VALIDATE FUNDS
         if txn.transaction_type == "BUY" and wallet.balance < Money(0, 'USD'):
