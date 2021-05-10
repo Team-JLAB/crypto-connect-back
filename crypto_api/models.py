@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 
 
-
 TRANSACTION_TYPES = (
     ("BUY", "BUY"),
     ("SELL", "SELL")
@@ -33,14 +32,17 @@ class Transaction(models.Model):
     transaction_type = models.CharField(
         max_length=10, choices=TRANSACTION_TYPES, default="BUY")
 
+    def save(self, *args, **kwargs):
+        self.coin = self.coin.lower()
+        return super(Transaction, self).save(*args, **kwargs)
+      
+
 class Watchlist(models.Model):
-   
     user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     coin = models.CharField(max_length=4)
   
-
 
 class User(AbstractUser):
     username = models.CharField(blank=True, null=True, max_length=64)
