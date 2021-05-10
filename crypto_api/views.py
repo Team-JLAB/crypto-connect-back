@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializer import WalletSerializer, UserSerializer, TransactionSerializer
-from .models import Wallet, User, Transaction
+from .serializer import WalletSerializer, UserSerializer, TransactionSerializer, WatchlistSerializer
+from .models import Wallet, User, Transaction, Watchlist
 from .permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from rest_framework.permissions import AllowAny
 
@@ -39,3 +39,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Transaction.objects.filter(user_id=user)
+
+
+class WatchlistViewSet(viewsets.ModelViewSet):
+    queryset = Watchlist.objects.all()
+    serializer_class = WatchlistSerializer

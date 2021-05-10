@@ -12,6 +12,7 @@ djangorestframework = "^3.12.4"
 django-rest-auth = "^0.9.5"
 djangorestframework-jwt = "^1.11.0"
 django-environ = "^0.4.5"
+whitenoise = "^5.2.0"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.5.7"

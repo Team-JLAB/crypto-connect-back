@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import User, Wallet, Transaction
 from djmoney.money import Money
+from .models import User, Wallet, Watchlist, Transaction
 
 
 class WalletSerializer(serializers.ModelSerializer):
@@ -29,8 +29,14 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.save()
-        Wallet.objects.create(user_id=user)
+        Wallet.objects.create(user_id=user)       
         return user
+      
+
+class WatchlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Watchlist
+        fields = ('coin', 'user_id' )
 
 
 class TransactionSerializer(serializers.ModelSerializer):
