@@ -44,3 +44,4 @@ class TransactionViewSet(viewsets.ModelViewSet):
 class WatchlistViewSet(viewsets.ModelViewSet):
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
+    http_method_names = ['get', 'post', 'head', 'delete']

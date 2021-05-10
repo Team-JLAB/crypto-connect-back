@@ -34,9 +34,26 @@ class UserSerializer(serializers.ModelSerializer):
       
 
 class WatchlistSerializer(serializers.ModelSerializer):
+    def validate_coin(self, coin):
+        user_id = self.context['request'].data['user_id']
+        try:
+            obj = self.Meta.model.objects.get(user_id=user_id, coin=coin)
+        except self.Meta.model.DoesNotExist:
+            pass
+        else:
+            raise serializers.ValidationError(
+                f'user_id {user_id} with coin {coin} already exists')
+        return coin
+
+    def validate_user_id(self, user_id):
+        if user_id != self.context['request'].user:
+            raise serializers.ValidationError(
+                'Cannot create transactions for unauthenticated user')
+        return user_id
+
     class Meta:
         model = Watchlist
-        fields = ('coin', 'user_id' )
+        fields = ('user_id', 'coin', 'watchlist_id')
 
 
 class TransactionSerializer(serializers.ModelSerializer):
