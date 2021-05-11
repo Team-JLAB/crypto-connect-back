@@ -36,6 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 class WatchlistSerializer(serializers.ModelSerializer):
     def validate_coin(self, coin):
         user_id = self.context['request'].data['user_id']
+        coin = coin.lower()
         try:
             obj = self.Meta.model.objects.get(user_id=user_id, coin=coin)
         except self.Meta.model.DoesNotExist:

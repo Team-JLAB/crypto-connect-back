@@ -28,7 +28,7 @@ class Transaction(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     units = models.PositiveIntegerField(default=1)
     price = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
-    coin = models.CharField(max_length=4)
+    coin = models.CharField(max_length=64)
     transaction_type = models.CharField(
         max_length=10, choices=TRANSACTION_TYPES, default="BUY")
 
@@ -46,7 +46,7 @@ class Watchlist(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=False, null=False)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    coin = models.CharField(max_length=4, blank=False, null=False)
+    coin = models.CharField(max_length=64, blank=False, null=False)
 
 
 class User(AbstractUser):
