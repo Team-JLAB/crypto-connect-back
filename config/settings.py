@@ -167,6 +167,8 @@ REST_FRAMEWORK = {
     ),
 }
 
-
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'crypto_api.serializer.CustomTokenSerializer'
+}
 
 CORS_ALLOW_ALL_ORIGINS = env.bool("ALLOW_ALL_ORIGINS")
