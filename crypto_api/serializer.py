@@ -1,6 +1,13 @@
 from rest_framework import serializers
 from djmoney.money import Money
 from .models import User, Wallet, Watchlist, Transaction
+from rest_auth.models import TokenModel
+
+
+class CustomTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TokenModel
+        fields = ('key', 'user_id',)
 
 
 class WalletSerializer(serializers.ModelSerializer):
@@ -29,13 +36,14 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.save()
-        Wallet.objects.create(user_id=user)       
+        Wallet.objects.create(user_id=user)
         return user
-      
+
 
 class WatchlistSerializer(serializers.ModelSerializer):
     def validate_coin(self, coin):
         user_id = self.context['request'].data['user_id']
+        coin = coin.lower()
         try:
             obj = self.Meta.model.objects.get(user_id=user_id, coin=coin)
         except self.Meta.model.DoesNotExist:
