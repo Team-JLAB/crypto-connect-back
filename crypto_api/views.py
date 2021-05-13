@@ -45,3 +45,7 @@ class WatchlistViewSet(viewsets.ModelViewSet):
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
     http_method_names = ['get', 'post', 'head', 'delete']
+
+    def get_queryset(self):
+        user = self.request.user
+        return Watchlist.objects.filter(user_id=user)
