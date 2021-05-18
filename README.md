@@ -9,7 +9,7 @@ This is the back-end repo of our app CryptoConnect. CryptoConnect is a simulated
 https://jlab-crypto-api.herokuapp.com/api/
 
 ## Authors
-*Click to be redirector to their linkedin page.*
+*Click to be redirected to their linkedin page.*
 
 [Anthony Beaver](https://www.linkedin.com/in/anthony-beaver/)
 
